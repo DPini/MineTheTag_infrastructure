@@ -1,0 +1,4 @@
+[submodule "docker/backend"]
+	path = docker/backend
+	url = https://github.com/MineTheTag/MineTheTag_Backend.git
+	branch = master
