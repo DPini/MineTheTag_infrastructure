@@ -1,0 +1,15 @@
+ version: '2'
+ services:
+   db:
+     image: mdillon/postgis
+     environment:
+       - POSTGRES_PASSWORD=p455w0rd
+   backend:
+     build: ./backend
+     #command: ./api.py
+     ports:
+      - "5000:5000"
+     depends_on:
+      - db
+     links:
+      - db
