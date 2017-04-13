@@ -1,0 +1,6 @@
+  aws_access_key: ""
+  aws_secret_key: ""
+  ami_id: "ami-abff2ac4" # Debian image
+  region: "eu-central-1"
+  domain: ""
+  he_dns_password: ""
