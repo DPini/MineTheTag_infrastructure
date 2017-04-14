@@ -1,0 +1,12 @@
+# Create a local image and push it to the server without docker registry
+# is not viable because of the image size. ( ~700 MB )
+---
+- hosts: server
+  sudo: true
+  tasks:
+    - name: save actual docker image for MineTheTag Backend
+      sudo: false
+      local_action:
+        module: docker_image
+        name: minethetag_backend
+        archive_path: minethetag_backend.tar

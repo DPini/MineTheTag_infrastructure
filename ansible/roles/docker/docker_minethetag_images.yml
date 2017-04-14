@@ -1,0 +1,28 @@
+# Create a local image and push it to the server without docker registry
+# is not viable because of the image size. ( ~700 MB )
+---
+- hosts: server
+  sudo: true
+  vars:
+    code_path: ""
+  tasks:
+    - name: create directories
+      file:
+        path: "mttg_backend"
+        state: directory
+        mode: 0755
+
+    - name: upload code to server
+      synchronize:
+        src: "{{ code_path }}"
+        dest: "mttg_backend"
+
+    - name: build MinetTheTag_Backend docker image
+      docker_image:
+        path: "mttg_backend"
+        name: "minethetag_backend"
+        force: yes # recreate if exists
+
+    - name: Install PostGis image
+      docker_image:
+        name: "mdillon/postgis"

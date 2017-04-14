@@ -1,0 +1,4 @@
+[server]
+minethetag.cf
+[server:vars]
+ansible_user=admin

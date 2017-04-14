@@ -1,0 +1,22 @@
+# Create a local image and push it to the server without docker registry
+# is not viable because of the image size. ( ~700 MB )
+---
+- hosts: server
+  sudo: true
+  tasks:
+    - name: Start docker containers
+      docker_service:
+        project_name: MineTheTag
+        definition:
+          version: '2'
+          services:
+            db:
+              image: mdillon/postgis
+            web:
+              image: minethetag_backend
+              ports:
+              - "5000:80"
+              depends_on:
+              - db
+              links:
+              - db
