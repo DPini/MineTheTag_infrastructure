@@ -3,6 +3,9 @@
 ---
 - hosts: server
   sudo: true
+  vars:
+    - MTTG_DB_USER: "mttg"
+    - MTTG_DB_PASSWORD: ""
   tasks:
     - name: Start docker containers
       docker_service:
@@ -11,12 +14,28 @@
           version: '2'
           services:
             db:
-              image: mdillon/postgis
+              image: dpini/mttg_postgres
+              environment:
+                - MTTG_USER={{MTTG_DB_USER}}
+                - MTTG_PASSWORD={{MTTG_DB_PASSWORD}}
             web:
               image: minethetag_backend
+              environment:
+                - MTTG_DB_USER={{MTTG_DB_USER}}
+                - MTTG_DB_PASSWORD={{MTTG_DB_PASSWORD}}
               ports:
-              - "5000:80"
+              - "5000:5000"
               depends_on:
               - db
               links:
               - db
+
+            nginx:
+              image: nginx
+              volumes:
+                - /etc/nginx/:/etc/nginx/conf.d:ro
+                - /var/www:/var/www:ro
+                - /etc/letsencrypt/:/etc/letsencrypt:ro
+              ports:
+                - 80:80
+                - 443:443
