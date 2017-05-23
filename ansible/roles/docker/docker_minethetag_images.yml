@@ -4,7 +4,7 @@
 - hosts: server
   sudo: true
   vars:
-    code_path: ""
+    code_path: "fill with code path"
   tasks:
     - name: create directories
       file:
@@ -23,6 +23,6 @@
         name: "minethetag_backend"
         force: yes # recreate if exists
 
-    - name: Install PostGis image
+    - name: Install MineTheTag PosgtgreSQL image
       docker_image:
-        name: "mdillon/postgis"
+        name: "dpini/mttg_postgres"
